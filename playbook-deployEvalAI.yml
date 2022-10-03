@@ -1,0 +1,8 @@
+- name: Install Docker, Docker Compose
+  hosts: all
+  become: true
+  vars:
+    workdir: workdir
+    git_url: https://github.com/artnuke/EvalAI.git
+  roles:
+    - EvalAI

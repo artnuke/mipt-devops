@@ -1,0 +1,35 @@
+---
+- name: Update
+  apt:
+    name: "*"
+    state: latest
+
+- name: Install requirements
+  apt: 
+    pkg:
+    - ca-certificates
+    - curl
+    - gnupg
+    - lsb-release
+
+- name: Set up repository
+  shell: |
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+- name: Add Docker repository
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: Install Docker Engine
+  apt:
+    pkg:
+    - docker-ce={{docker_version}}
+    - docker-ce-cli
+    - containerd.io
+    - docker-compose-plugin
+
+- name: Enable Docker Service
+  systemd:
+    name: docker
+    enabled: yes

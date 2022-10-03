@@ -1,0 +1,12 @@
+---
+- name: Create workdir
+  file:
+    path: "{{workdir}}"
+    state: directory
+
+- name: Clone git project
+  git:
+    repo: "{{git_url}}"
+    dest: workdir
+    clone: yes
+    update: yes
